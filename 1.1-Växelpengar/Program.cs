@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 namespace _1._1_Växelpengar {
 
     class Program {
-        // ReasourceManager that loads the strings from th resource file
+        // ReasourceManager that loads the strings from th resource file.
         private static ResourceManager rm = Strings.ResourceManager;
+        // Denominations larger than this will be treated as bills.
+        private const uint LargestCoin = 10;
 
         static void Main(string[] args) {
             // Array with the available Swedish denominatons.
             uint[] denominations = { 500, 100, 50, 20, 10, 5, 1 };
 
-            // Variables
             double subtotal, roundingOffAmount;
             uint cash, total, change;
             uint[] notes;
 
-            // Main loop
             do {
                 // Read the total sum
                 subtotal = ReadPositiveDouble(rm.GetString("enter_total"));
@@ -166,7 +166,7 @@ namespace _1._1_Växelpengar {
 
             for (int i = 0; i < denominations.Length; i++) {
                 if (notes[i] > 0) {
-                    if (notes[i] > 10) {
+                    if (notes[i] > LargestCoin) {
                         Console.WriteLine("{0,3}-{2,-12}: {1}", denominations[i], notes[i], rm.GetString("bills"));
                     } else {
                         Console.WriteLine("{0,3}-{2,-12}: {1}", denominations[i], notes[i], rm.GetString("coins"));
