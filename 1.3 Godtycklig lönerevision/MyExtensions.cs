@@ -6,10 +6,20 @@ using System.Threading.Tasks;
 
 namespace _1._3_Godtycklig_lönerevision {
     public static class MyExtensions {
+        /// <summary>
+        /// Computes the dispertion (The difference beween Max and Min).
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
         public static int Dispertion(this int[] source) {
             return source.Max() - source.Min();
         }
 
+        /// <summary>
+        /// Computes the median (The value in the middle).
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
         public static int Median(this int[] source) {
             List<int> values = new List<int>(source);
             values.Sort();
