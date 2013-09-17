@@ -1,0 +1,6 @@
+c:\users\rasmus\documents\visual studio 2012\Projects\1.3 Godtycklig lönerevision\bin\Debug\1.3 Godtycklig lönerevision.exe.config
+C:\Users\Rasmus\documents\visual studio 2012\Projects\1.3 Godtycklig lönerevision\obj\Debug\1.3 Godtycklig lönerevision.csprojResolveAssemblyReference.cache
+C:\Users\Rasmus\documents\visual studio 2012\Projects\1.3 Godtycklig lönerevision\bin\Debug\1.3 Godtycklig lönerevision.exe
+C:\Users\Rasmus\documents\visual studio 2012\Projects\1.3 Godtycklig lönerevision\bin\Debug\1.3 Godtycklig lönerevision.pdb
+C:\Users\Rasmus\documents\visual studio 2012\Projects\1.3 Godtycklig lönerevision\obj\Debug\1.3 Godtycklig lönerevision.exe
+C:\Users\Rasmus\documents\visual studio 2012\Projects\1.3 Godtycklig lönerevision\obj\Debug\1.3 Godtycklig lönerevision.pdb

@@ -1,0 +1,8 @@
+c:\users\rasmus\documents\visual studio 2012\Projects\1.2 Rita med asterisker\bin\Debug\1.2 Rita med asterisker.exe.config
+c:\Users\Rasmus\Documents\Visual Studio 2012\Projects\1.2 Rita med asterisker\bin\Debug\1.2 Rita med asterisker.exe
+c:\Users\Rasmus\Documents\Visual Studio 2012\Projects\1.2 Rita med asterisker\bin\Debug\1.2 Rita med asterisker.pdb
+c:\Users\Rasmus\Documents\Visual Studio 2012\Projects\1.2 Rita med asterisker\obj\Debug\1.2 Rita med asterisker.csprojResolveAssemblyReference.cache
+c:\Users\Rasmus\Documents\Visual Studio 2012\Projects\1.2 Rita med asterisker\obj\Debug\_1._2_Rita_med_asterisker.Strings.resources
+c:\Users\Rasmus\Documents\Visual Studio 2012\Projects\1.2 Rita med asterisker\obj\Debug\1.2 Rita med asterisker.csproj.GenerateResource.Cache
+c:\Users\Rasmus\Documents\Visual Studio 2012\Projects\1.2 Rita med asterisker\obj\Debug\1.2 Rita med asterisker.exe
+c:\Users\Rasmus\Documents\Visual Studio 2012\Projects\1.2 Rita med asterisker\obj\Debug\1.2 Rita med asterisker.pdb
