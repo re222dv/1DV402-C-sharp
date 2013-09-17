@@ -29,7 +29,7 @@ namespace _1._3_Godtycklig_lönerevision {
         /// Ask the user if he wants to continue.
         /// </summary>
         /// <returns>true if he chooses to contine, false otherwise</returns>
-        static bool IsContinuing() {
+        private static bool IsContinuing() {
             ViewMessage("Tryck tangent för att fortsätta - ESC avslutar.");
             if (Console.ReadKey(true).Key == ConsoleKey.Escape) {
                 return false;
@@ -44,7 +44,7 @@ namespace _1._3_Godtycklig_lönerevision {
         /// </summary>
         /// <param name="prompt">A help text for the user</param>
         /// <returns>An integer</returns>
-        static int ReadInt(string prompt) {
+        private static int ReadInt(string prompt) {
             string line;
             int value;
             do {
@@ -72,7 +72,7 @@ namespace _1._3_Godtycklig_lönerevision {
         /// </summary>
         /// <param name="count">The number of salaries to read</param>
         /// <returns>An integer array with all salaries</returns>
-        static int[] ReadSalaries(int count) {
+        private static int[] ReadSalaries(int count) {
             List<int> salaries = new List<int>();
             for (int i = 1; i <= count; i++) {
                 salaries.Add(ReadInt(String.Format("Ange lön nummer {0}: ", i)));
@@ -86,7 +86,7 @@ namespace _1._3_Godtycklig_lönerevision {
         /// <param name="message">The message to write</param>
         /// <param name="backgroundColor">The backgound color of the message, defaults to blue</param>
         /// <param name="backgroundColor">The foreground (text) color of the message, defaults to white</param>
-        static void ViewMessage(string message,
+        private static void ViewMessage(string message,
                                 ConsoleColor backgroundColor = ConsoleColor.Blue,
                                 ConsoleColor foregroundColor = ConsoleColor.White) {
             Console.WriteLine();
@@ -101,7 +101,7 @@ namespace _1._3_Godtycklig_lönerevision {
         /// Writes the resut to the user.
         /// </summary>
         /// <param name="salaries">The array of salaries to output</param>
-        static void ViewResult(int[] salaries) {
+        private static void ViewResult(int[] salaries) {
             Console.WriteLine();
             Console.WriteLine("-------------------------");
             Console.WriteLine("Medianlön:    {0:c0}", salaries.Median());
