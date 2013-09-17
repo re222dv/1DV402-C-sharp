@@ -1,6 +1,0 @@
-c:\users\rasmus\documents\visual studio 2012\Projects\1.1-Växelpengar\bin\Debug\1.1-Växelpengar.exe.config
-C:\Users\Rasmus\documents\visual studio 2012\Projects\1.1-Växelpengar\obj\Debug\1.1-Växelpengar.csprojResolveAssemblyReference.cache
-C:\Users\Rasmus\documents\visual studio 2012\Projects\1.1-Växelpengar\bin\Debug\1.1-Växelpengar.exe
-C:\Users\Rasmus\documents\visual studio 2012\Projects\1.1-Växelpengar\bin\Debug\1.1-Växelpengar.pdb
-C:\Users\Rasmus\documents\visual studio 2012\Projects\1.1-Växelpengar\obj\Debug\1.1-Växelpengar.exe
-C:\Users\Rasmus\documents\visual studio 2012\Projects\1.1-Växelpengar\obj\Debug\1.1-Växelpengar.pdb
