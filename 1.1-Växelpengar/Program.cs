@@ -9,7 +9,7 @@ namespace _1._1_Växelpengar {
 
     class Program {
         // ReasourceManager that loads the strings from th resource file
-        static ResourceManager rm = Strings.ResourceManager;
+        private static ResourceManager rm = Strings.ResourceManager;
 
         static void Main(string[] args) {
             // Array with the available Swedish denominatons.
@@ -55,7 +55,7 @@ namespace _1._1_Växelpengar {
         /// </summary>
         /// <param name="promt">The texts that should be displayed as a help</param>
         /// <returns>A positive double</returns>
-        static double ReadPositiveDouble(string promt) {
+        private static double ReadPositiveDouble(string promt) {
             string raw;
             double value;
             do {
@@ -86,7 +86,7 @@ namespace _1._1_Växelpengar {
         /// <param name="promt">The texts that should be displayed as a help</param>
         /// <param name="minValue">The minimum allowed value</param>
         /// <returns>A positive integral</returns>
-        static uint ReadUInt(string promt, uint minValue) {
+        private static uint ReadUInt(string promt, uint minValue) {
             string line;
             uint raw;
             do {
@@ -115,7 +115,7 @@ namespace _1._1_Växelpengar {
         /// <param name="change">The change</param>
         /// <param name="denominations">The availble denominations</param>
         /// <returns>An array of how many coins and bills of each denomination</returns>
-        static uint[] SplitIntoDenominations(uint change, uint[] denominations) {
+        private static uint[] SplitIntoDenominations(uint change, uint[] denominations) {
             List<uint> notes = new List<uint>();
             foreach (uint denomination in denominations) {
                 notes.Add(change / denomination);
@@ -129,7 +129,7 @@ namespace _1._1_Växelpengar {
         /// </summary>
         /// <param name="message">The message to write</param>
         /// <param name="isError">Formats the message as an error, defaults to false</param>
-        static void ViewMessage(string message, bool isError = false) {
+        private static void ViewMessage(string message, bool isError = false) {
             Console.WriteLine();
             if (isError) {
                 Console.BackgroundColor = ConsoleColor.Red;
@@ -151,7 +151,7 @@ namespace _1._1_Växelpengar {
         /// <param name="change">The change to the customer</param>
         /// <param name="notes">The amount of each coin or bill</param>
         /// <param name="denominations">The availble coin and bills</param>
-        static void ViewReceipt(double subtotal, double roundingOffAmount, uint total,
+        private static void ViewReceipt(double subtotal, double roundingOffAmount, uint total,
                                uint cash, uint change, uint[] notes, uint[] denominations) {
             Console.WriteLine();
             Console.WriteLine(rm.GetString("receipt"));
