@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace _1._2_Rita_med_asterisker {
     class Program {
         // ReasourceManager that loads the strings from the resource file
-        static ResourceManager rm = Strings.ResourceManager;
+        private static ResourceManager rm = Strings.ResourceManager;
         // The Maximum allowed width of the diamond
-        const byte MaxAsterisks = 79;
+        private const byte MaxAsterisks = 79;
 
         static void Main(string[] args) {
             byte asterisks;
@@ -25,7 +25,7 @@ namespace _1._2_Rita_med_asterisker {
         /// Ask the user if he wants to continue.
         /// </summary>
         /// <returns>true if he chooses to contine, false otherwise</returns>
-        static bool IsContinuing() {
+        private static bool IsContinuing() {
             ViewMessage(rm.GetString("quit"));
             if (Console.ReadKey(true).Key == ConsoleKey.Escape) {
                 return false;
@@ -41,7 +41,7 @@ namespace _1._2_Rita_med_asterisker {
         /// <param name="prompt">A help text for the user, defaults to null</param>
         /// <param name="maxValue">The maximum allowed value, defaults to 255</param>
         /// <returns>An odd byte</returns>
-        static byte ReadOddByte(string prompt = null, byte maxValue = 255) {
+        private static byte ReadOddByte(string prompt = null, byte maxValue = 255) {
             byte value;
             do {
                 Console.Write(prompt);
@@ -67,7 +67,7 @@ namespace _1._2_Rita_med_asterisker {
         /// Renders the diamond.
         /// </summary>
         /// <param name="maxCount">The number of asterisks in the middle</param>
-        static void RenderDiamond(byte maxCount) {
+        private static void RenderDiamond(byte maxCount) {
             // Render the first pyramid
             for (byte i = 1; i <= maxCount; i += 2) {
                 RenderRow(maxCount, i);
@@ -83,7 +83,7 @@ namespace _1._2_Rita_med_asterisker {
         /// </summary>
         /// <param name="maxCount">The number of asterisks in the middle</param>
         /// <param name="asteriskCount">The number of asterisks on this row</param>
-        static void RenderRow(int maxCount, int asteriskCount) {
+        private static void RenderRow(int maxCount, int asteriskCount) {
             int spaces = (maxCount - asteriskCount) / 2;
             for (int i = 0; i < spaces; i++) {
                 Console.Write(" ");
@@ -99,7 +99,7 @@ namespace _1._2_Rita_med_asterisker {
         /// </summary>
         /// <param name="message">The message to write</param>
         /// <param name="isError">Formats the message as an error, defaults to false</param>
-        static void ViewMessage(string message, bool isError = false) {
+        private static void ViewMessage(string message, bool isError = false) {
             Console.WriteLine();
             if (isError) {
                 Console.BackgroundColor = ConsoleColor.Red;
