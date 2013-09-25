@@ -10,13 +10,10 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            int earnings = 0;
-
-            for (int i = 0; i <= 100; i += 2)
-            {
-                earnings += i;
+            string[] arr = { "hej", "blä", "lol", "hhh" };
+            for (int i = arr.Length - 3; i < arr.Length; ++i) {
+                Console.WriteLine(arr[i]);
             }
-            Console.WriteLine("Earned: " + earnings);
         }
     }
 }
