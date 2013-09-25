@@ -23,7 +23,7 @@ namespace _1._1_Växelpengar {
 
             do {
                 // Read the total sum
-                subtotal = ReadPositiveDouble(rm.GetString("enter_total"));
+                subtotal = ReadPositiveDouble(Strings.enter_total);
 
                 // Calculate the reminder when rounding to whole crowns.
                 total = (uint)Math.Round(subtotal);
@@ -41,10 +41,7 @@ namespace _1._1_Växelpengar {
 
                 // Ask for new calculation or exit
                 ViewMessage(rm.GetString("new_calc"));
-                if (Console.ReadKey(true).Key == ConsoleKey.Escape) {
-                    break;
-                }
-            } while (true);
+            } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
         }
 
         /// <summary>

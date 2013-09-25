@@ -27,10 +27,7 @@ namespace _1._2_Rita_med_asterisker {
         /// <returns>true if he chooses to contine, false otherwise</returns>
         private static bool IsContinuing() {
             ViewMessage(rm.GetString("quit"));
-            if (Console.ReadKey(true).Key == ConsoleKey.Escape) {
-                return false;
-            }
-            return true;
+            return Console.ReadKey(true).Key != ConsoleKey.Escape;
         }
 
         /// <summary>
