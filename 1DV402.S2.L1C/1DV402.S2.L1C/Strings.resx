@@ -118,13 +118,49 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Cannot_Guess" xml:space="preserve">
-    <value>Kan inte gissa</value>
+    <value>Det hemliga talet är {0}.</value>
+  </data>
+  <data name="Count_1" xml:space="preserve">
+    <value>Första</value>
+  </data>
+  <data name="Count_2" xml:space="preserve">
+    <value>Andra</value>
+  </data>
+  <data name="Count_3" xml:space="preserve">
+    <value>Tredje</value>
+  </data>
+  <data name="Count_4" xml:space="preserve">
+    <value>Fjärde</value>
+  </data>
+  <data name="Count_5" xml:space="preserve">
+    <value>Femte</value>
+  </data>
+  <data name="Count_6" xml:space="preserve">
+    <value>Sjätte</value>
+  </data>
+  <data name="Count_7" xml:space="preserve">
+    <value>Sjunde</value>
   </data>
   <data name="Guess_Number" xml:space="preserve">
-    <value>Gissa ett nummer</value>
+    <value>{0} gissningen: </value>
+  </data>
+  <data name="Outcome_High" xml:space="preserve">
+    <value>{0} är för högt.</value>
+  </data>
+  <data name="Outcome_Indefinite" xml:space="preserve">
+    <value>Indefinite</value>
+  </data>
+  <data name="Outcome_Low" xml:space="preserve">
+    <value>{0} är för lågt.</value>
+  </data>
+  <data name="Outcome_NoMoreGuesses" xml:space="preserve">
+    <value>Slut på gissningar. </value>
+  </data>
+  <data name="Outcome_OldGuess" xml:space="preserve">
+    <value>OldGuess</value>
   </data>
   <data name="Outcome_Right" xml:space="preserve">
-    <value>Rätt!</value>
+    <value>RÄTT GISSAT! Grattis du klarade det på {0} försöket.</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Gissa det hemliga talet - nivå C</value>

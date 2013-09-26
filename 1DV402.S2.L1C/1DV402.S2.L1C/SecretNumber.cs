@@ -11,9 +11,14 @@ namespace _1DV402.S2.L1C {
         private GuessedNumber[] _guessedNumbers;
         private int? _number;
 
+        public SecretNumber() {
+            _guessedNumbers = new GuessedNumber[MaxNumberOfGuesses];
+            Initialize();
+        }
+
         public bool CanMakeGuess {
             get {
-                return Outcome != Outcome.NoMoreGuesses;
+                return Outcome != Outcome.NoMoreGuesses && Outcome != Outcome.Right;
             }
             private set {
                 if (value) {
@@ -88,8 +93,8 @@ namespace _1DV402.S2.L1C {
                 }
             }
 
-            if (Count >= 6) {
-                Count = 7;
+            if (Count >= MaxNumberOfGuesses - 1) {
+                Count = MaxNumberOfGuesses;
                 CanMakeGuess = false;
                 return Outcome;
             }
@@ -101,25 +106,18 @@ namespace _1DV402.S2.L1C {
             } else if (Guess > _number) {
                 outcome = Outcome.High;
             } else {
-                Outcome = Outcome.Right;
-                CanMakeGuess = false;
-                return Outcome;
+                outcome = Outcome.Right;
+                Outcome = outcome;
+                return outcome;
             }
 
-            GuessedNumber number = new GuessedNumber();
-            number.Number = Guess;
-            number.Outcome = Outcome;
-            _guessedNumbers[Count] = number;
+            _guessedNumbers[Count].Number = Guess;
+            _guessedNumbers[Count].Outcome = Outcome;
 
             Outcome = outcome;
             Count++;
 
             return outcome;
-        }
-
-        public SecretNumber() {
-            _guessedNumbers = new GuessedNumber[7];
-            Initialize();
         }
     }
 
