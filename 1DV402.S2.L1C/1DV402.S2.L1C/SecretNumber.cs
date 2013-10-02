@@ -18,14 +18,6 @@ namespace _1DV402.S2.L1C {
             get {
                 return Outcome != Outcome.NoMoreGuesses && Outcome != Outcome.Right;
             }
-            private set {
-                if (value && Outcome == Outcome.NoMoreGuesses) {
-                    Outcome = Outcome.Indefinite;
-                } else {
-                    Outcome = Outcome.NoMoreGuesses;
-                    Number = _number;
-                }
-            }
         }
 
         /// <summary>
@@ -89,6 +81,7 @@ namespace _1DV402.S2.L1C {
                 _guessedNumbers[i].Number = null;
                 _guessedNumbers[i].Outcome = Outcome.Indefinite;
             }
+            //_guessedNumbers.Initialize();
 
             Random random = new Random();
             Number = random.Next(1, 101);
@@ -119,7 +112,7 @@ namespace _1DV402.S2.L1C {
 
             if (Count >= MaxNumberOfGuesses - 1) {
                 Count = MaxNumberOfGuesses;
-                CanMakeGuess = false;
+                Outcome = Outcome.NoMoreGuesses;
                 return Outcome;
             }
 
