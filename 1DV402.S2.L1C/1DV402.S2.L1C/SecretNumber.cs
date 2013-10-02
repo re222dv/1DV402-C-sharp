@@ -11,20 +11,16 @@ namespace _1DV402.S2.L1C {
         private GuessedNumber[] _guessedNumbers;
         private int? _number;
 
-        public SecretNumber() {
-            _guessedNumbers = new GuessedNumber[MaxNumberOfGuesses];
-            Initialize();
-        }
-
+        /// <summary>
+        /// Controlls if a guess can be made or not.
+        /// </summary>
         public bool CanMakeGuess {
             get {
                 return Outcome != Outcome.NoMoreGuesses && Outcome != Outcome.Right;
             }
             private set {
-                if (value) {
-                    if (Outcome == Outcome.NoMoreGuesses) {
-                        Outcome = Outcome.Indefinite;
-                    }
+                if (value && Outcome == Outcome.NoMoreGuesses) {
+                    Outcome = Outcome.Indefinite;
                 } else {
                     Outcome = Outcome.NoMoreGuesses;
                     Number = _number;
@@ -32,22 +28,34 @@ namespace _1DV402.S2.L1C {
             }
         }
 
+        /// <summary>
+        /// Holds the number of guesses.
+        /// </summary>
         public int Count {
             get;
             private set;
         }
 
+        /// <summary>
+        /// Holds the latest guess.
+        /// </summary>
         public int? Guess {
             get;
             private set;
         }
 
+        /// <summary>
+        /// Holds the guessed numbers, returns a copy so it can't be modified.
+        /// </summary>
         public GuessedNumber[] GuessedNumbers {
             get {
                 return (GuessedNumber[]) _guessedNumbers.Clone();
             }
         }
 
+        /// <summary>
+        /// Holds the secret number, returns null if not allowed to read.
+        /// </summary>
         public int? Number {
             get {
                 if (CanMakeGuess) {
@@ -60,11 +68,22 @@ namespace _1DV402.S2.L1C {
             }
         }
 
+        /// <summary>
+        /// Holds the current outcome.
+        /// </summary>
         public Outcome Outcome {
             get;
             private set;
         }
 
+        public SecretNumber() {
+            _guessedNumbers = new GuessedNumber[MaxNumberOfGuesses];
+            Initialize();
+        }
+
+        /// <summary>
+        /// Initializes SecretNumber to a clean state.
+        /// </summary>
         public void Initialize() {
             for (int i = 0; i < _guessedNumbers.Length; i++) {
                 _guessedNumbers[i].Number = null;
@@ -79,6 +98,11 @@ namespace _1DV402.S2.L1C {
             Outcome = Outcome.Indefinite;
         }
 
+        /// <summary>
+        /// Make a guess at the secret number and handles all inner game logic.
+        /// </summary>
+        /// <param name="guess">The number to guess</param>
+        /// <returns>The outcome</returns>
         public Outcome MakeGuess(int guess) {
             if (guess > 100 || guess < 1) {
                 throw new ArgumentOutOfRangeException("guess is not between 1 and 100");
@@ -99,25 +123,21 @@ namespace _1DV402.S2.L1C {
                 return Outcome;
             }
 
-            Outcome outcome;
-
             if (Guess < _number) {
-                outcome = Outcome.Low;
+                Outcome = Outcome.Low;
             } else if (Guess > _number) {
-                outcome = Outcome.High;
+                Outcome = Outcome.High;
             } else {
-                outcome = Outcome.Right;
-                Outcome = outcome;
-                return outcome;
+                Outcome = Outcome.Right;
+                return Outcome;
             }
 
             _guessedNumbers[Count].Number = Guess;
             _guessedNumbers[Count].Outcome = Outcome;
 
-            Outcome = outcome;
             Count++;
 
-            return outcome;
+            return Outcome;
         }
     }
 

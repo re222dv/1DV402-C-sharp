@@ -39,7 +39,7 @@ namespace _1DV402.S2.L1C {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("_1DV402.S2.L1C.Strings", typeof(Strings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("_1DV402.S2.L1C.Properties.Strings", typeof(Strings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,21 @@ namespace _1DV402.S2.L1C {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Det hemliga talet är {0}..
+        ///   Looks up a localized string similar to  Inga fler gissningar! Det hemliga talet var {0}..
         /// </summary>
         internal static string Cannot_Guess {
             get {
                 return ResourceManager.GetString("Cannot_Guess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///    Nytt hemligt nummer? [N] avbryter.    .
+        /// </summary>
+        internal static string Continue_Prompt {
+            get {
+                return ResourceManager.GetString("Continue_Prompt", resourceCulture);
             }
         }
         
@@ -142,20 +152,32 @@ namespace _1DV402.S2.L1C {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ╔══════════════════════════════════════╗ 
+        ///║ Gissa det hemliga talet mellan 1-100 ║ 
+        ///╚══════════════════════════════════════╝ 
+        ///.
+        /// </summary>
+        internal static string Header {
+            get {
+                return ResourceManager.GetString("Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gissa ett heltal mellan 1-100..
+        /// </summary>
+        internal static string Help_Prompt {
+            get {
+                return ResourceManager.GetString("Help_Prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} är för högt..
         /// </summary>
         internal static string Outcome_High {
             get {
                 return ResourceManager.GetString("Outcome_High", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Indefinite.
-        /// </summary>
-        internal static string Outcome_Indefinite {
-            get {
-                return ResourceManager.GetString("Outcome_Indefinite", resourceCulture);
             }
         }
         
@@ -169,7 +191,7 @@ namespace _1DV402.S2.L1C {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Slut på gissningar. .
+        ///   Looks up a localized string similar to Inga fler gissningar!.
         /// </summary>
         internal static string Outcome_NoMoreGuesses {
             get {
@@ -178,7 +200,7 @@ namespace _1DV402.S2.L1C {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OldGuess.
+        ///   Looks up a localized string similar to Du har redan gissat på talet {0}!.
         /// </summary>
         internal static string Outcome_OldGuess {
             get {
@@ -201,6 +223,15 @@ namespace _1DV402.S2.L1C {
         internal static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ett oväntat fel inträffade! Programmet avbryts..
+        /// </summary>
+        internal static string Unexpected_Exception {
+            get {
+                return ResourceManager.GetString("Unexpected_Exception", resourceCulture);
             }
         }
     }
