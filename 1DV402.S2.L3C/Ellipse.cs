@@ -5,15 +5,23 @@ using System.Text;
 
 namespace _1DV402.S2.L3C {
     public class Ellipse : Shape2D {
-        public double Area {
+        /// <summary>
+        /// Calculates the Area of the Shape
+        /// </summary>
+        public override double Area {
             get {
-                throw new System.NotImplementedException();
+                return Math.PI * (Length / 2) * (Width / 2);
             }
         }
 
-        public double Perimeter {
+        /// <summary>
+        /// Calculates the Perimeter of the Shape
+        /// </summary>
+        public override double Perimeter {
             get {
-                throw new System.NotImplementedException();
+                double a = Length / 2;
+                double b = Width / 2;
+                return Math.PI * Math.Sqrt(2 * a * a + 2 * b * b);
             }
         }
 

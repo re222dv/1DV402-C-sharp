@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace _1DV402.S2.L2C {
     class ClockDisplay {
+        public const byte Hours = 24;
+        public const byte Minutes = 60;
+
         private NumberDisplay _hourDisplay;
         private NumberDisplay _minuteDisplay;
 
@@ -19,8 +22,8 @@ namespace _1DV402.S2.L2C {
             set {
                 if (System.Text.RegularExpressions.Regex.IsMatch(value, "^(([0-1]?[0-9])|([2][0-3])):([0-5][0-9])$")) {
                     string[] split = value.Split(':');
-                    _hourDisplay = new NumberDisplay(24, int.Parse(split[0]));
-                    _minuteDisplay = new NumberDisplay(60, int.Parse(split[1]));
+                    _hourDisplay = new NumberDisplay(Hours, int.Parse(split[0]));
+                    _minuteDisplay = new NumberDisplay(Minutes, int.Parse(split[1]));
                 } else {
                     throw new ArgumentException(String.Format("Strängen '{0}' kan inte tolkas som en tid i formatet HH:mm.", value));
                 }
@@ -31,8 +34,8 @@ namespace _1DV402.S2.L2C {
         }
 
         public ClockDisplay(int hour, int minute) {
-            _hourDisplay = new NumberDisplay(24, hour);
-            _minuteDisplay = new NumberDisplay(60, minute);
+            _hourDisplay = new NumberDisplay(Hours, hour);
+            _minuteDisplay = new NumberDisplay(Minutes, minute);
         }
 
         public ClockDisplay(string time) {

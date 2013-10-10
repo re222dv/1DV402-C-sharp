@@ -34,15 +34,14 @@ namespace _1DV402.S2.L2C {
             }
             set {
                 if (0 > value || value >= MaxNumber) {
-                    throw new ArgumentException("Number needs to be above zero and below Max Number");
+                    throw new ArgumentException("Number needs to be above zero and below or equal to Max Number");
                 }
 
                 _number = value;
             }
         }
 
-        public NumberDisplay(int maxNumber) : this(maxNumber, 0) {
-        }
+        public NumberDisplay(int maxNumber) : this(maxNumber, 0) {}
 
         public NumberDisplay(int maxNumber, int number) {
             MaxNumber = maxNumber;

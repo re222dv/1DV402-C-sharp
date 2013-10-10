@@ -8,12 +8,9 @@ namespace _1DV402.S2.L3C {
         private double _length;
         private double _width;
 
-        public double Area {
-            get {
-                throw new System.NotImplementedException();
-            }
-        }
-
+        /// <summary>
+        /// The length of the shape
+        /// </summary>
         public double Length {
             get {
                 return _length;
@@ -26,8 +23,9 @@ namespace _1DV402.S2.L3C {
             }
         }
 
-        public abstract double Perimiter;
-
+        /// <summary>
+        /// The width of the shape
+        /// </summary>
         public double Width {
             get {
                 return _width;
@@ -40,27 +38,53 @@ namespace _1DV402.S2.L3C {
             }
         }
 
+
+        public abstract double Area {
+            get;
+        }
+
+        public abstract double Perimeter {
+            get;
+        }
+
         protected Shape2D(ShapeType shapeType, double length, double width) : base(shapeType) {
             Length = length;
             Width = width;
         }
 
         public int CompareTo(object obj) {
-            throw new NotImplementedException();
+            if (obj == null) {
+                return 1;
+            }
+
+            if (!(obj is Shape2D)) {
+                throw new ArgumentException();
+            }
+
+            return (int) Math.Round(Area - ((Shape2D) obj).Area);
         }
 
-        public string ToString() {
+        public override string ToString() {
             return ToString("G");
         }
 
-        public string ToString(string format) {
+        /// <summary>
+        /// Returns a string representation of the shape
+        /// </summary>
+        /// <param name="format">The format of the representation, G = multi row, R = single row</param>
+        public override string ToString(string format) {
             switch (format) {
                 case "G":
                 case "":
                 case null:
-                    throw new System.NotImplementedException();
+                    return String.Format("Längd  :{0,10:F1}\n"+
+                                         "Bredd  :{1,10:F1}\n"+
+                                         "Omkrets:{2,10:F1}\n"+
+                                         "Area   :{3,10:F1}\n",
+                                         Length, Width, Perimeter, Area);
                 case "R":
-                    throw new System.NotImplementedException();
+                    return String.Format("{0,-10}{1,6:F1}{2,6:F1}{3,8:F1}{4,8:F1}",
+                                         ShapeType.AsText(), Length, Width, Perimeter, Area);
                 default:
                     throw new FormatException("format needs to be G or R");
             }            

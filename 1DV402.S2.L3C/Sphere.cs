@@ -5,21 +5,30 @@ using System.Text;
 
 namespace _1DV402.S2.L3C {
     public class Sphere : Shape3D {
-        public double MantelArea {
+        /// <summary>
+        /// Calculates the MantelArea of the Shape
+        /// </summary>
+        public override double MantelArea {
             get {
-                throw new System.NotImplementedException();
+                return _baseShape.Area * 4;
             }
         }
 
-        public double TotalSurfaceArea {
+        /// <summary>
+        /// Calculates the TotalSurfaceArea of the Shape
+        /// </summary>
+        public override double TotalSurfaceArea {
             get {
-                throw new System.NotImplementedException();
+                return MantelArea;
             }
         }
 
-        public double Volume {
+        /// <summary>
+        /// Calculates the Volume of the Shape
+        /// </summary>
+        public override double Volume {
             get {
-                throw new System.NotImplementedException();
+                return 4 / 3 * _baseShape.Area * (Height / 2);
             }
         }
 

@@ -62,16 +62,16 @@
     </TypeIdentifier>
   </Class>
   <Class Name="_1DV402.S2.L3C.Program" Collapsed="true">
-    <Position X="21" Y="0.75" Width="1.5" />
+    <Position X="22.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAGAIABAAAABEAAAAgAgAAAAAAAAAAAAAACBAAAAAA=</HashCode>
+      <HashCode>AAAGAIABAAAABEAAQAiAgAAAAAAAAAAAAAQCBQACAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="_1DV402.S2.L3C.Extensions">
-    <Position X="23.5" Y="1" Width="1.5" />
+  <Class Name="_1DV402.S2.L3C.Extensions" Collapsed="true">
+    <Position X="21" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>Extensions.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -79,7 +79,7 @@
     <Position X="21" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAACAAAAAAAAAAQAAAAAAAggAAAAQAQAAAAAAAA=</HashCode>
-      <FileName>ShapeType.cs</FileName>
+      <FileName>Shape.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />
