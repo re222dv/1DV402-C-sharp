@@ -21,7 +21,8 @@ namespace _1DV402.S3.L1 {
         }
 
         public override string ToString() {
-            //return String.Format("");
+            return String.Join(" ", new string[] { Amount, Measure, Name }).Trim();
+            ;
         }
     }
 }

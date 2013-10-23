@@ -15,6 +15,30 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
+  <Class Name="_1DV402.S3.L1.RecipeRepository">
+    <Position X="6" Y="2.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="_1DV402.S3.L1.RecipeRepository.RecipeReadStatus" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>RecipeRepository.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAACAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RecipeRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="_1DV402.S3.L1.RecipeView">
+    <Position X="5.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>RecipeView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Struct Name="_1DV402.S3.L1.Ingredient" Collapsed="true">
     <Position X="0.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
