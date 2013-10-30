@@ -5,6 +5,9 @@ using System.Text;
 
 namespace _1DV402.S3.L1 {
     public class RecipeView {
+        /// <summary>
+        /// Prints a recipe to the console
+        /// </summary>
         public static void Render(Recipe recipe) {
             RenderHeader(recipe.Name);
             Console.WriteLine("Ingredienser");
@@ -27,12 +30,20 @@ namespace _1DV402.S3.L1 {
             }
         }
 
+        /// <summary>
+        /// Prints a list of recipes to the console
+        /// </summary>
         public static void Render(IList<Recipe> recipes) {
             foreach (Recipe recipe in recipes) {
                 Render(recipe);
             }
         }
 
+        /// <summary>
+        /// Prints a header to the console
+        /// </summary>
+        /// <param name="header">string/name of the header</param>
+        /// <param name="type">Type of the header, defaults to normal</param>
         public static void RenderHeader(string header, Type type = Type.normal) {
             switch (type) {
                 case Type.bad:

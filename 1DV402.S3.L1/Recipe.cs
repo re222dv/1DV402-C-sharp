@@ -5,23 +5,35 @@ using System.Linq;
 using System.Text;
 
 namespace _1DV402.S3.L1 {
+    /// <summary>
+    /// Represents a recipe
+    /// </summary>
     public class Recipe : IComparable, IComparable<Recipe> {
         private string _name;
         private List<Ingredient> _ingredients;
         private List<string> _directions;
 
+        /// <summary>
+        /// Returns the ingredients
+        /// </summary>
         public ReadOnlyCollection<Ingredient> Ingredients {
             get {
                 return new ReadOnlyCollection<Ingredient>(_ingredients);
             }
         }
 
+        /// <summary>
+        /// Returns the directions
+        /// </summary>
         public ReadOnlyCollection<string> Directions {
             get {
                 return new ReadOnlyCollection<string>(_directions);
             }
         }
 
+        /// <summary>
+        /// Holds the name of the recipe
+        /// </summary>
         public string Name {
             get {
                 return _name;
@@ -46,10 +58,16 @@ namespace _1DV402.S3.L1 {
             _directions = new List<string>(direction);
         }
 
+        /// <summary>
+        /// Add an ingredient
+        /// </summary>
         public void Add(Ingredient ingredient) {
             _ingredients.Add(ingredient);
         }
 
+        /// <summary>
+        /// Add a direction
+        /// </summary>
         public void Add(string direction) {
             _directions.Add(direction);
         }

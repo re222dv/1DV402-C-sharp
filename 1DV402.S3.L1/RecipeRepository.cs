@@ -7,6 +7,9 @@ namespace _1DV402.S3.L1 {
     public class RecipeRepository {
         private string _path;
     
+        /// <summary>
+        /// Holds the path of a file
+        /// </summary>
         public string Path {
             get {
                 return _path;
@@ -24,6 +27,10 @@ namespace _1DV402.S3.L1 {
             Path = path;
         }
     
+        /// <summary>
+        /// Loads recipes from the file specified at Path
+        /// </summary>
+        /// <returns>A list of recipes</returns>
         public List<Recipe> Load() {
             RecipeReadStatus status = RecipeReadStatus.Indefinite;
             string[] lines = System.IO.File.ReadAllLines(Path);
@@ -80,6 +87,10 @@ namespace _1DV402.S3.L1 {
             return recepies;
         }
 
+        /// <summary>
+        /// Saves recipes to the file specified at Path
+        /// </summary>
+        /// <param name="recipes">A list of recipes</param>
         public void Save(List<Recipe> recipes) {
             List<String> lines = new List<string>();
             foreach (Recipe recipe in recipes) {

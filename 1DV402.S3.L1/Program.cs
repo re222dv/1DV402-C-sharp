@@ -15,7 +15,7 @@ namespace _1DV402.S3.L1 {
                         running = false;
                         break;
                     case 1:
-                        recipes = LoadRecepies();
+                        recipes.AddRange(LoadRecepies());
                         break;
                     case 2:
                         SaveRecipes(recipes);
@@ -29,10 +29,22 @@ namespace _1DV402.S3.L1 {
                     case 5:
                         ViewRecipe(recipes, true);
                         break;
+                    case 6:
+                        Recipe recipe = CreateRecipe();
+                        if (recipe != null) {
+                            recipes.Add(recipe);
+                        }
+                        break;
+                    case 7:
+                        FindRecipe(recipes);
+                        break;
                 }
             } while (running);
         }
 
+        /// <summary>
+        /// Pauses untill any key have been pressed
+        /// </summary>
         private static void ContinueOnKeyPressed() {
             Console.BackgroundColor = ConsoleColor.Blue;
             Console.ForegroundColor = ConsoleColor.White;
@@ -43,10 +55,258 @@ namespace _1DV402.S3.L1 {
             Console.ResetColor();
         }
 
+        /// <summary>
+        /// Creates a new recipe
+        /// </summary>
+        /// <returns>The recipe or null if aborted</returns>
         private static Recipe CreateRecipe() {
-            throw new System.NotImplementedException();
+            Console.Clear();
+            RecipeView.RenderHeader("          Nytt recept          ");
+            string name = ReadRecipeName();
+            if (name == null) {
+                return null;
+            }
+
+            Recipe recipe = new Recipe(name);
+
+            List<Ingredient> ingredients = ReadIngredients();
+            if (ingredients == null) {
+                return null;
+            }
+            foreach (Ingredient ingredient in ingredients) {
+                recipe.Add(ingredient);
+            }
+
+            List<string> directions = ReadDirections();
+            if (directions == null) {
+                return null;
+            }
+            foreach (string direction in directions) {
+                recipe.Add(direction);
+            }
+
+            return recipe;
         }
 
+        /// <summary>
+        /// Reads the name for a recipe
+        /// </summary>
+        /// <returns>The name or null if aborted</returns>
+        private static string ReadRecipeName() {
+            do {
+                Console.Write("Ange receptets namn: ");
+                string name = Console.ReadLine();
+                if (String.IsNullOrEmpty(name)) {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    Console.WriteLine(" FEL! Du måste ange receptets namn.");
+                    Console.WriteLine();
+
+                    Console.BackgroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("  Tryck tangent för att fortsätta - [Esc] avbryter   ");
+                    Console.ResetColor();
+
+                    if (Console.ReadKey(true).Key == ConsoleKey.Escape) {
+                        return null;
+                    }
+
+                    continue;
+                }
+
+                return name;
+            } while(true);
+        }
+
+        /// <summary>
+        /// Reads the ingredients for a recipe
+        /// </summary>
+        /// <returns>The ingredients or null if aborted</returns>
+        private static List<Ingredient> ReadIngredients() {
+            List<Ingredient> ingredients = new List<Ingredient>();
+            Console.WriteLine("Ange receptets ingredienser - tom rad för namnet avslutar: ");
+
+            do {
+                Ingredient ingredient = new Ingredient();
+                Console.WriteLine("{0}.", ingredients.Count+1);
+                
+                Console.Write("Namn:");
+                string name = Console.ReadLine();
+                if (String.IsNullOrEmpty(name)) {
+
+                    Console.BackgroundColor = ConsoleColor.Yellow;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.WriteLine("Är du säker på att du inte vill lägga till fler ingredienser [j/N]");
+                    Console.ResetColor();
+
+                    switch (Console.ReadLine().ToLower()) {
+                        case "j":
+                        case "ja":
+                        case "y":
+                        case "yes":
+                            if (ingredients.Count < 1) {
+                                Console.BackgroundColor = ConsoleColor.Red;
+                                Console.ForegroundColor = ConsoleColor.White;
+
+                                Console.WriteLine(" FEL! Du måste ange minst en ingrediens.");
+                                Console.WriteLine();
+
+                                Console.BackgroundColor = ConsoleColor.Blue;
+                                Console.WriteLine("  Tryck tangent för att fortsätta ange ingredienser - [Esc] avbryter   ");
+                                Console.ResetColor();
+
+                                if (Console.ReadKey(true).Key == ConsoleKey.Escape) {
+                                    return null;
+                                }
+
+                                continue;
+                            }
+                            return ingredients;
+                        default:
+                            continue;
+                    }
+                }
+                ingredient.Name = name;
+
+                Console.Write("Mängd:");
+                ingredient.Amount = Console.ReadLine();
+
+                Console.Write("Mått:");
+                ingredient.Measure = Console.ReadLine();
+
+                ingredients.Add(ingredient);
+            } while (true);
+        }
+
+
+        /// <summary>
+        /// Reads the directions for a recipe
+        /// </summary>
+        /// <returns>The directions or null if aborted</returns>
+        private static List<string> ReadDirections() {
+            List<string> directions = new List<string>();
+            Console.WriteLine("Ange receptets instruktioner - tom rad avslutar: ");
+
+            do {
+                string direction;
+                Console.WriteLine("<{0}>", directions.Count + 1);
+
+                string name = Console.ReadLine();
+                if (String.IsNullOrEmpty(name)) {
+
+                    Console.BackgroundColor = ConsoleColor.Yellow;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.WriteLine("Är du säker på att du inte vill lägga till fler instruktioner [j/N]");
+                    Console.ResetColor();
+
+                    switch (Console.ReadLine().ToLower()) {
+                        case "j":
+                        case "ja":
+                        case "y":
+                        case "yes":
+                            if (directions.Count < 1) {
+                                Console.BackgroundColor = ConsoleColor.Red;
+                                Console.ForegroundColor = ConsoleColor.White;
+
+                                Console.WriteLine(" FEL! Du måste ange minst en instruktion.");
+                                Console.WriteLine();
+
+                                Console.BackgroundColor = ConsoleColor.Blue;
+                                Console.WriteLine("  Tryck tangent för att fortsätta ange instruktioner - [Esc] avbryter   ");
+                                Console.ResetColor();
+
+                                if (Console.ReadKey(true).Key == ConsoleKey.Escape) {
+                                    return null;
+                                }
+
+                                continue;
+                            }
+                            return directions;
+                        default:
+                            continue;
+                    }
+                }
+                direction = name;
+
+                directions.Add(direction);
+            } while (true);
+        }
+
+
+        /// <summary>
+        /// Lets the user search for recipes by ingredients
+        /// </summary>
+        private static void FindRecipe(List<Recipe> recipes) {
+            if (recipes.Count <= 0) {
+                Console.Clear();
+                RecipeView.RenderHeader("Det finns inga recept att söka bland", Type.warning);
+                ContinueOnKeyPressed();
+                return;
+            }
+
+            do {
+                Console.Clear();
+                RecipeView.RenderHeader("          Sök recept          ");
+
+                Console.WriteLine("Ange ingredienser att söka efter, sepparera med mellanslag: ");
+                string line = Console.ReadLine().ToLower();
+                if (String.IsNullOrEmpty(line)) {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    Console.WriteLine(" FEL! Du angav inga ingredienser.");
+                    Console.WriteLine();
+
+                    Console.BackgroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("  Tryck tangent för att fortsätta - [Esc] avbryter   ");
+                    Console.ResetColor();
+
+                    if (Console.ReadKey(true).Key == ConsoleKey.Escape) {
+                        return;
+                    }
+
+                    continue;
+                }
+
+                List<Recipe> matches = new List<Recipe>();
+                string[] ingredients = line.Split(' ');
+
+                foreach (Recipe recipe in recipes) {
+                    bool matchAll = false;
+                    foreach (string ingredient in ingredients) {
+                        bool match = false;
+                        foreach (Ingredient i in recipe.Ingredients) {
+                            if (i.Name.ToLower() == ingredient) {
+                                match = true;
+                                break;
+                            }
+                        }
+                        // if match isn't true atleast one ingredient doesn't match so we break after matchAll have been set false
+                        matchAll = match;
+                        if (!match) {
+                            break;
+                        }
+                    }
+                    if (matchAll) {
+                        matches.Add(recipe);
+                    }
+                }
+
+                if (matches.Count < 1) {
+                    Console.WriteLine("Inga recept hittades");
+                } else {
+                    ViewRecipe(matches);
+                }
+
+                ContinueOnKeyPressed();
+
+            } while (true);
+        }
+
+        /// <summary>
+        /// Deletes a recipe
+        /// </summary>
+        /// <param name="recipes"></param>
         private static void DeleteRecipe(List<Recipe> recipes) {
             if (recipes.Count <= 0) {
                 Console.Clear();
@@ -55,64 +315,33 @@ namespace _1DV402.S3.L1 {
                 return;
             }
             do {
-                Console.Clear();
-                RecipeView.RenderHeader("Välj recept att ta bort");
-
-                Console.WriteLine(" 0. Avsluta.");
-                Console.WriteLine();
-                Console.WriteLine(" ------------------------------------");
-                Console.WriteLine();
-
-                for (int i = 1; i <= recipes.Count; i++) {
-                    Console.WriteLine(" {0}. {1}.", i, recipes[i-1].Name);
+                Recipe recipe = GetRecipe("Välj recept att ta bort", recipes);
+                if (recipe == null) {
+                    return;
                 }
-                Console.WriteLine();
-                Console.WriteLine("\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550");
-                Console.WriteLine();
-                Console.Write("Ange menyval [0-{0}]: ", recipes.Count);
-
-                try {
-                    int choise = int.Parse(Console.ReadLine());
-                    if (choise == 0) {
+                Console.BackgroundColor = ConsoleColor.Yellow;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.WriteLine("Är du säker på att du vill ta bort '{0}'? [j/N]", recipe.Name);
+                Console.ResetColor();
+                switch (Console.ReadLine().ToLower()) {
+                    case "j":
+                    case "ja":
+                    case "y":
+                    case "yes":
+                        recipes.Remove(recipe);
+                        RecipeView.RenderHeader("Receptet har tagits bort", Type.good);
                         break;
-                    }
-                    if (choise > 0 && choise <= recipes.Count) {
-                        Console.BackgroundColor = ConsoleColor.Yellow;
-                        Console.ForegroundColor = ConsoleColor.Black;
-                        Console.WriteLine("Är du säker på att du vill ta bort '{0}'? [j/N]", recipes[choise - 1].Name);
-                        Console.ResetColor();
-
-                        switch (Console.ReadLine().ToLower()) {
-                            case "j":
-                            case "ja":
-                            case "y":
-                            case "yes":
-                                recipes.RemoveAt(choise - 1);
-                                RecipeView.RenderHeader("Receptet har tagits bort", Type.good);
-                                break;
-                            default:
-                                RecipeView.RenderHeader("Receptet kommer inte att tas bort", Type.good);
-                                break;
-                        }
-                    } else {
-                        Console.BackgroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine();
-                        Console.WriteLine("Felaktigt menyval");
-                        Console.WriteLine();
-                        Console.ResetColor();
-                    }
-                } catch {
-                    Console.BackgroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine();
-                    Console.WriteLine("Felaktigt menyval");
-                    Console.WriteLine();
-                    Console.ResetColor();
+                    default:
+                        RecipeView.RenderHeader("Receptet kommer inte att tas bort", Type.good);
+                        break;
                 }
-
-                ContinueOnKeyPressed();
             } while (true);
         }
 
+        /// <summary>
+        /// Handles the main menu
+        /// </summary>
+        /// <returns>The choosen option</returns>
         private static int GetMenuChoise() {
             do {
                 Console.Clear();
@@ -161,10 +390,56 @@ namespace _1DV402.S3.L1 {
             } while (true);
         }
 
+        /// <summary>
+        /// Asks the user to pick a recipe
+        /// </summary>
+        /// <param name="header">Text in header</param>
         private static Recipe GetRecipe(string header, List<Recipe> recipes) {
-            throw new System.NotImplementedException();
+            do {
+                Console.Clear();
+                RecipeView.RenderHeader(header);
+
+                Console.WriteLine(" 0. Avsluta.");
+                Console.WriteLine();
+                Console.WriteLine(" ------------------------------------");
+                Console.WriteLine();
+
+                for (int i = 1; i <= recipes.Count; i++) {
+                    Console.WriteLine(" {0}. {1}.", i, recipes[i - 1].Name);
+                }
+                Console.WriteLine();
+                Console.WriteLine("\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550");
+                Console.WriteLine();
+                Console.Write("Ange menyval [0-{0}]: ", recipes.Count);
+
+                try {
+                    int choise = int.Parse(Console.ReadLine());
+                    if (choise == 0) {
+                        return null;
+                    }
+                    if (choise > 0 && choise <= recipes.Count) {
+                        Console.Clear();
+                        return recipes[choise - 1];
+                    } else {
+                        Console.BackgroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine();
+                        Console.WriteLine("Felaktigt menyval");
+                        Console.WriteLine();
+                        Console.ResetColor();
+                    }
+                } catch {
+                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine();
+                    Console.WriteLine("Felaktigt menyval");
+                    Console.WriteLine();
+                    Console.ResetColor();
+                }
+            } while (true);
         }
 
+        /// <summary>
+        /// Load recipes from a file choosen by the user
+        /// </summary>
         private static List<Recipe> LoadRecepies() {
             List<Recipe> recepies;
             Console.Clear();
@@ -185,18 +460,9 @@ namespace _1DV402.S3.L1 {
             return recepies;
         }
 
-        private static List<string> ReadDirections() {
-            throw new System.NotImplementedException();
-        }
-
-        private static List<Ingredient> ReadIngredients() {
-            throw new System.NotImplementedException();
-        }
-
-        private static string ReadRecipeName() {
-            throw new System.NotImplementedException();
-        }
-
+        /// <summary>
+        /// Save the recipes to a file choosen by the user
+        /// </summary>
         private static void SaveRecipes(List<Recipe> recipes) {
             Console.Clear();
             if (recipes.Count > 0) {
@@ -243,10 +509,10 @@ namespace _1DV402.S3.L1 {
         }
 
         /// <summary>
-        /// 
+        /// Views a single or all recipes.
+        /// If only a single recipe should be viewed it asks the usere wich one
         /// </summary>
-        /// <param name="recipes"></param>
-        /// <param name="viewAll"></param>
+        /// <param name="viewAll">defaults to false</param>
         private static void ViewRecipe(List<Recipe> recipes, bool viewAll = false) {
             if (recipes.Count <= 0) {
                 Console.Clear();
@@ -261,45 +527,11 @@ namespace _1DV402.S3.L1 {
                 ContinueOnKeyPressed();
             } else {
                 do {
-                    Console.Clear();
-                    RecipeView.RenderHeader("Välj recept att visa");
-
-                    Console.WriteLine(" 0. Avsluta.");
-                    Console.WriteLine();
-                    Console.WriteLine(" ------------------------------------");
-                    Console.WriteLine();
-
-                    for (int i = 1; i <= recipes.Count; i++) {
-                        Console.WriteLine(" {0}. {1}.", i, recipes[i - 1].Name);
+                    Recipe recipe = GetRecipe("Välj recept att visa", recipes);
+                    if (recipe == null) {
+                        return;
                     }
-                    Console.WriteLine();
-                    Console.WriteLine("\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550");
-                    Console.WriteLine();
-                    Console.Write("Ange menyval [0-{0}]: ", recipes.Count);
-
-                    try {
-                        int choise = int.Parse(Console.ReadLine());
-                        if (choise == 0) {
-                            break;
-                        }
-                        if (choise > 0 && choise <= recipes.Count) {
-                            Console.Clear();
-                            RecipeView.Render(recipes[choise - 1]);
-                        } else {
-                            Console.BackgroundColor = ConsoleColor.DarkRed;
-                            Console.WriteLine();
-                            Console.WriteLine("Felaktigt menyval");
-                            Console.WriteLine();
-                            Console.ResetColor();
-                        }
-                    } catch {
-                        Console.BackgroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine();
-                        Console.WriteLine("Felaktigt menyval");
-                        Console.WriteLine();
-                        Console.ResetColor();
-                    }
-
+                    RecipeView.Render(recipe);
                     ContinueOnKeyPressed();
                 } while (true);
             }
