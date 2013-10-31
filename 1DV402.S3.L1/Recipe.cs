@@ -20,6 +20,9 @@ namespace _1DV402.S3.L1 {
             get {
                 return new ReadOnlyCollection<Ingredient>(_ingredients);
             }
+            set {
+                _ingredients = new List<Ingredient>(value);
+            }
         }
 
         /// <summary>
@@ -28,6 +31,9 @@ namespace _1DV402.S3.L1 {
         public ReadOnlyCollection<string> Directions {
             get {
                 return new ReadOnlyCollection<string>(_directions);
+            }
+            set {
+                _directions = new List<string>(value);
             }
         }
 

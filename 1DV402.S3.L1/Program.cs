@@ -38,6 +38,9 @@ namespace _1DV402.S3.L1 {
                     case 7:
                         FindRecipe(recipes);
                         break;
+                    case 8:
+                        ModifyRecipe(recipes);
+                        break;
                 }
             } while (running);
         }
@@ -121,9 +124,12 @@ namespace _1DV402.S3.L1 {
         /// <summary>
         /// Reads the ingredients for a recipe
         /// </summary>
+        /// <param name="ingredients">A default set of ingredients, defaults to null</param>
         /// <returns>The ingredients or null if aborted</returns>
-        private static List<Ingredient> ReadIngredients() {
-            List<Ingredient> ingredients = new List<Ingredient>();
+        private static List<Ingredient> ReadIngredients(List<Ingredient> ingredients = null) {
+            if (ingredients == null) {
+                ingredients = new List<Ingredient>();
+            }
             Console.WriteLine("Ange receptets ingredienser - tom rad för namnet avslutar: ");
 
             do {
@@ -183,8 +189,10 @@ namespace _1DV402.S3.L1 {
         /// Reads the directions for a recipe
         /// </summary>
         /// <returns>The directions or null if aborted</returns>
-        private static List<string> ReadDirections() {
-            List<string> directions = new List<string>();
+        private static List<string> ReadDirections(List<string> directions = null) {
+            if (directions == null) {
+                directions = new List<string>();
+            }
             Console.WriteLine("Ange receptets instruktioner - tom rad avslutar: ");
 
             do {
@@ -304,9 +312,8 @@ namespace _1DV402.S3.L1 {
         }
 
         /// <summary>
-        /// Deletes a recipe
+        /// Lets the user deletes a recipe
         /// </summary>
-        /// <param name="recipes"></param>
         private static void DeleteRecipe(List<Recipe> recipes) {
             if (recipes.Count <= 0) {
                 Console.Clear();
@@ -336,6 +343,396 @@ namespace _1DV402.S3.L1 {
                         break;
                 }
             } while (true);
+        }
+
+        /// <summary>
+        /// Lets the user modify a recipe
+        /// </summary>
+        private static void ModifyRecipe(List<Recipe> recipes) {
+            if (recipes.Count <= 0) {
+                Console.Clear();
+                RecipeView.RenderHeader("Det finns inga recept att ändra", Type.warning);
+                ContinueOnKeyPressed();
+                return;
+            }
+            do {
+                Recipe recipe = GetRecipe("Välj recept att ändra", recipes);
+                if (recipe == null) {
+                    return;
+                }
+
+                bool modifying = true;
+                do {
+                    Console.Clear();
+                    RecipeView.RenderHeader(recipe.Name);
+                    Console.WriteLine(" 0. Avsluta.");
+                    Console.WriteLine();
+                    Console.WriteLine(" ------------------------------------");
+                    Console.WriteLine();
+                    Console.WriteLine(" 1. Visa receptet.");
+                    Console.WriteLine();
+                    Console.WriteLine(" - Ingredienser ----------------------");
+                    Console.WriteLine();
+                    Console.WriteLine(" 2. Lägg till ingredienser.");
+                    Console.WriteLine(" 3. Ta bort ingredienser.");
+                    Console.WriteLine(" 4. Byt ordning på ingredienser.");
+                    Console.WriteLine();
+                    Console.WriteLine(" - Instruktioner ---------------------");
+                    Console.WriteLine();
+                    Console.WriteLine(" 5. Lägg till instruktioner.");
+                    Console.WriteLine(" 6. Ta bort instruktioner.");
+                    Console.WriteLine(" 7. Byt ordning på instruktioner.");
+                    Console.WriteLine();
+                    Console.WriteLine("\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550");
+                    Console.WriteLine();
+                    Console.Write("Ange menyval [0-7]: ");
+
+                    try {
+                        int choise = int.Parse(Console.ReadLine());
+                        switch (choise) {
+                            case 0:
+                                modifying = false;
+                                break;
+                            case 1:
+                                RecipeView.Render(recipe);
+                                break;
+                            case 2:
+                                recipe.Ingredients = ReadIngredients(new List<Ingredient>(recipe.Ingredients)).AsReadOnly();
+                                break;
+                            case 3:
+                                recipe.Ingredients = RemoveIngredient(new List<Ingredient>(recipe.Ingredients)).AsReadOnly();
+                                break;
+                            case 4:
+                                recipe.Ingredients = MoveIngredient(new List<Ingredient>(recipe.Ingredients)).AsReadOnly();
+                                break;
+                            case 5:
+                                recipe.Directions = ReadDirections(new List<string>(recipe.Directions)).AsReadOnly();
+                                break;
+                            case 6:
+                                recipe.Directions = RemoveDirection(new List<string>(recipe.Directions)).AsReadOnly();
+                                break;
+                            case 7:
+                                recipe.Directions = MoveDirection(new List<string>(recipe.Directions)).AsReadOnly();
+                                break;
+                            default:
+                                Console.BackgroundColor = ConsoleColor.DarkRed;
+                                Console.WriteLine();
+                                Console.WriteLine("Felaktigt menyval");
+                                Console.WriteLine();
+                                Console.ResetColor();
+                                break;
+                        }
+                    } catch {
+                        Console.BackgroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine();
+                        Console.WriteLine("Felaktigt menyval");
+                        Console.WriteLine();
+                        Console.ResetColor();
+                    }
+
+                    if (modifying) {
+                        ContinueOnKeyPressed();
+                    }
+                } while (modifying);
+            } while (true);
+        }
+
+        /// <summary>
+        /// Lets the user remove an ingredient
+        /// </summary>
+        private static List<Ingredient> RemoveIngredient(List<Ingredient> ingredients) {
+            if (ingredients.Count <= 0) {
+                Console.Clear();
+                RecipeView.RenderHeader("Det finns inga ingredienser att ta bort", Type.warning);
+                ContinueOnKeyPressed();
+                return ingredients;
+            }
+            do {
+                Console.Clear();
+                RecipeView.RenderHeader("Välj ingrediens att ta bort");
+                Console.WriteLine(" 0. Avsluta.");
+                Console.WriteLine();
+                Console.WriteLine(" ------------------------------------");
+                Console.WriteLine();
+                for (int i = 0; i < ingredients.Count; i++) {
+                    Ingredient ingredient = ingredients[i];
+                    Console.WriteLine(" {0}. {1}.", i + 1, ingredient.Name);
+                }
+                Console.WriteLine();
+                Console.WriteLine("\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550");
+                Console.WriteLine();
+                Console.Write("Ange menyval [0-{0}]: ", ingredients.Count);
+
+                try {
+                    int choise = int.Parse(Console.ReadLine());
+                    if (choise == 0) {
+                        break;
+                    }
+                    if (choise > 0 && choise <= ingredients.Count) {
+                        Console.BackgroundColor = ConsoleColor.Yellow;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.WriteLine("Är du säker på att du vill ta bort '{0}'? [j/N]", ingredients[choise- 1].Name);
+                        Console.ResetColor();
+                        switch (Console.ReadLine().ToLower()) {
+                            case "j":
+                            case "ja":
+                            case "y":
+                            case "yes":
+                                ingredients.RemoveAt(choise - 1);
+                                RecipeView.RenderHeader("Ingrediensen har tagits bort", Type.good);
+                                break;
+                            default:
+                                RecipeView.RenderHeader("Ingrediensen kommer inte att tas bort", Type.good);
+                                break;
+                        }
+                    } else {
+                        Console.BackgroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine();
+                        Console.WriteLine("Felaktigt menyval");
+                        Console.WriteLine();
+                        Console.ResetColor();
+                    }
+                } catch {
+                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine();
+                    Console.WriteLine("Felaktigt menyval");
+                    Console.WriteLine();
+                    Console.ResetColor();
+                }
+
+                ContinueOnKeyPressed();
+            } while (true);
+            return ingredients;
+        }
+
+        /// <summary>
+        /// Lets the user remove a direction
+        /// </summary>
+        private static List<string> RemoveDirection(List<string> directions) {
+            if (directions.Count <= 0) {
+                Console.Clear();
+                RecipeView.RenderHeader("Det finns inga instruktioner att ta bort", Type.warning);
+                ContinueOnKeyPressed();
+                return directions;
+            }
+            do {
+                Console.Clear();
+                RecipeView.RenderHeader("Välj instruktion att ta bort");
+                Console.WriteLine(" 0. Avsluta.");
+                Console.WriteLine();
+                Console.WriteLine(" ------------------------------------");
+                Console.WriteLine();
+                for (int i = 0; i < directions.Count; i++) {
+                    string direction = directions[i];
+                    Console.WriteLine(" {0}. {1}.", i + 1, direction);
+                }
+                Console.WriteLine();
+                Console.WriteLine("\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550");
+                Console.WriteLine();
+                Console.Write("Ange menyval [0-{0}]: ", directions.Count);
+
+                try {
+                    int choise = int.Parse(Console.ReadLine());
+                    if (choise == 0) {
+                        break;
+                    }
+                    if (choise > 0 && choise <= directions.Count) {
+                        Console.BackgroundColor = ConsoleColor.Yellow;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.WriteLine("Är du säker på att du vill ta bort '{0}'? [j/N]", directions[choise-1]);
+                        Console.ResetColor();
+                        switch (Console.ReadLine().ToLower()) {
+                            case "j":
+                            case "ja":
+                            case "y":
+                            case "yes":
+                                directions.RemoveAt(choise - 1);
+                                RecipeView.RenderHeader("Instruktionen har tagits bort", Type.good);
+                                break;
+                            default:
+                                RecipeView.RenderHeader("Instruktionen kommer inte att tas bort", Type.good);
+                                break;
+                        }
+                    } else {
+                        Console.BackgroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine();
+                        Console.WriteLine("Felaktigt menyval");
+                        Console.WriteLine();
+                        Console.ResetColor();
+                    }
+                } catch {
+                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine();
+                    Console.WriteLine("Felaktigt menyval");
+                    Console.WriteLine();
+                    Console.ResetColor();
+                }
+
+                ContinueOnKeyPressed();
+            } while (true);
+            return directions;
+        }
+
+        /// <summary>
+        /// Lets the user move an ingredient
+        /// </summary>
+        private static List<Ingredient> MoveIngredient(List<Ingredient> ingredients) {
+            if (ingredients.Count <= 0) {
+                Console.Clear();
+                RecipeView.RenderHeader("Det finns inga ingredienser att ta bort", Type.warning);
+                ContinueOnKeyPressed();
+                return ingredients;
+            }
+            do {
+                Console.Clear();
+                RecipeView.RenderHeader("Välj ingrediens att ta bort");
+                Console.WriteLine(" 0. Avsluta.");
+                Console.WriteLine();
+                Console.WriteLine(" ------------------------------------");
+                Console.WriteLine();
+                for (int i = 0; i < ingredients.Count; i++) {
+                    Ingredient ingredient = ingredients[i];
+                    Console.WriteLine(" {0}. {1}.", i + 1, ingredient.Name);
+                }
+                Console.WriteLine();
+                Console.WriteLine("\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550");
+                Console.WriteLine();
+                Console.Write("Ange menyval [0-{0}]: ", ingredients.Count);
+
+                try {
+                    int choise = int.Parse(Console.ReadLine());
+                    if (choise == 0) {
+                        break;
+                    }
+                    if (choise > 0 && choise <= ingredients.Count) {
+                        bool moving = true;
+                        do {
+                            Console.WriteLine();
+                            Console.WriteLine(" 0. Avsluta.");
+                            if (choise != 1) {
+                                Console.WriteLine(" 1. Flytta upp.");
+                            }
+                            if (choise != ingredients.Count) {
+                                Console.WriteLine(" 2. Flytta ner.");
+                                Console.Write("Ange menyval [0-2]: ");
+                            } else {
+                                Console.Write("Ange menyval [0-1]: ");
+                            }
+                            string subChoise = Console.ReadLine();
+                            if (subChoise == "0") {
+                                moving = false;
+                                break;
+                            } else if (subChoise == "1" && choise != 1) {
+                                moving = false;
+                                ingredients.Insert(choise - 2, ingredients[choise - 1]);
+                                ingredients.RemoveAt(choise);
+                                break;
+                            } else if (subChoise == "2" && choise != ingredients.Count) {
+                                moving = false;
+                                ingredients.Insert(choise + 1, ingredients[choise - 1]);
+                                ingredients.RemoveAt(choise - 1);
+                                break;
+                            }
+                        } while (moving);
+                    } else {
+                        Console.BackgroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine();
+                        Console.WriteLine("Felaktigt menyval");
+                        Console.WriteLine();
+                        Console.ResetColor();
+                    }
+                } catch {
+                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine();
+                    Console.WriteLine("Felaktigt menyval");
+                    Console.WriteLine();
+                    Console.ResetColor();
+                }
+
+                ContinueOnKeyPressed();
+            } while (true);
+            return ingredients;
+        }
+
+        /// <summary>
+        /// Lets the user move a direction
+        /// </summary>
+        private static List<string> MoveDirection(List<string> directions) {
+            if (directions.Count <= 0) {
+                Console.Clear();
+                RecipeView.RenderHeader("Det finns inga instruktioner att ta bort", Type.warning);
+                ContinueOnKeyPressed();
+                return directions;
+            }
+            do {
+                Console.Clear();
+                RecipeView.RenderHeader("Välj instruktion att flytta");
+                Console.WriteLine(" 0. Avsluta.");
+                Console.WriteLine();
+                Console.WriteLine(" ------------------------------------");
+                Console.WriteLine();
+                for (int i = 0; i < directions.Count; i++) {
+                    string direction = directions[i];
+                    Console.WriteLine(" {0}. {1}.", i + 1, direction);
+                }
+                Console.WriteLine();
+                Console.WriteLine("\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550");
+                Console.WriteLine();
+                Console.Write("Ange menyval [0-{0}]: ", directions.Count);
+
+                try {
+                    int choise = int.Parse(Console.ReadLine());
+                    if (choise == 0) {
+                        break;
+                    }
+                    if (choise > 0 && choise <= directions.Count) {
+                        bool moving = true;
+                        do {
+                            Console.WriteLine();
+                            Console.WriteLine(" 0. Avsluta.");
+                            if  (choise != 1) {
+                                Console.WriteLine(" 1. Flytta upp.");
+                            }
+                            if  (choise != directions.Count) {
+                                Console.WriteLine(" 2. Flytta ner.");
+                                Console.Write("Ange menyval [0-2]: ");
+                            } else {
+                                Console.Write("Ange menyval [0-1]: ");
+                            }
+                            string subChoise = Console.ReadLine();
+                            if (subChoise == "0") {
+                                moving = false;
+                                break;
+                            } else if (subChoise == "1" && choise != 1) {
+                                moving = false;
+                                directions.Insert(choise - 2, directions[choise - 1]);
+                                directions.RemoveAt(choise);
+                                break;
+                            } else if (subChoise == "2" && choise != directions.Count) {
+                                moving = false;
+                                directions.Insert(choise+1, directions[choise - 1]);
+                                directions.RemoveAt(choise-1);
+                                break;
+                            }
+                        } while (moving);
+                    } else {
+                        Console.BackgroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine();
+                        Console.WriteLine("Felaktigt menyval");
+                        Console.WriteLine();
+                        Console.ResetColor();
+                    }
+                } catch {
+                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine();
+                    Console.WriteLine("Felaktigt menyval");
+                    Console.WriteLine();
+                    Console.ResetColor();
+                }
+
+                ContinueOnKeyPressed();
+            } while (true);
+            return directions;
         }
 
         /// <summary>
